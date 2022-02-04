@@ -1,7 +1,13 @@
 require('colors')
 
-const { showMenu, pause, readInput, showListToDelete } = require('./helper/inquirer')
-const {saveDB, readDB} = require('./helper/db-handler')
+const {
+  showMenu,
+  pause,
+  readInput,
+  showListToDelete,
+  confirm
+} = require('./helper/inquirer')
+const { saveDB, readDB } = require('./helper/db-handler')
 const Task = require('./models/task')
 const Tasks = require('./models/tasks')
 
@@ -38,8 +44,13 @@ const main = async () => {
         break
       case 6:
         const taskId = await showListToDelete(tasks.listArr)
-        console.log(taskId);
-        // saveDB(tasks.listArr)
+        if (taskId === 0) continue
+        const res = await confirm()
+        if (res) {
+          tasks.deleteTask(taskId)
+          saveDB(tasks.listArr)
+          console.log('Tarea eliminada exitosamente'.green)
+        }
         break
       default:
         break

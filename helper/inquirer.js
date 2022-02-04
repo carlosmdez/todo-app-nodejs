@@ -30,6 +30,7 @@ const showListToDelete = async (tasks = []) => {
     const str = `${index}. ${task.description}`
     return { value: task.id, name: str }
   })
+  choices.unshift({ value: 0, name: `${'0.'.green} Cancelar` })
   const menuConfig = [
     {
       type: 'list',
@@ -48,6 +49,15 @@ const pause = async () => {
   await inquirer.prompt([{ type: 'input', name: 'pause', message }])
 }
 
+const confirm = async msg => {
+  const question = [
+    { type: 'confirm', name: 'confirmation', message: '¿Estás seguro?' }
+  ]
+  console.log('\n')
+  const { confirmation } = await inquirer.prompt(question)
+  return confirmation
+}
+
 const readInput = async message => {
   const question = {
     type: 'input',
@@ -64,4 +74,4 @@ const readInput = async message => {
   return description
 }
 
-module.exports = { showMenu, pause, readInput, showListToDelete }
+module.exports = { showMenu, pause, readInput, showListToDelete, confirm }
