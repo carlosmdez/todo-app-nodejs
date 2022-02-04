@@ -43,13 +43,31 @@ const showListToDelete = async (tasks = []) => {
   return taskId
 }
 
+const showCheckList = async (tasks = []) => {
+  const choices = tasks.map((task, i) => {
+    const index = `${i + 1}`.green
+    const str = ` ${index}. ${task.description}`
+    return { value: task.id, name: str, checked: !!task.doneDate }
+  })
+  const menuConfig = [
+    {
+      type: 'checkbox',
+      name: 'tasksIds',
+      message: 'Seleccione las tareas',
+      choices
+    }
+  ]
+  const { tasksIds } = await inquirer.prompt(menuConfig)
+  return tasksIds
+}
+
 const pause = async () => {
   const message = `Presione ${'ENTER'.green} para continuar\n`
   console.log('\n')
   await inquirer.prompt([{ type: 'input', name: 'pause', message }])
 }
 
-const confirm = async msg => {
+const confirm = async () => {
   const question = [
     { type: 'confirm', name: 'confirmation', message: '¿Estás seguro?' }
   ]
@@ -74,4 +92,11 @@ const readInput = async message => {
   return description
 }
 
-module.exports = { showMenu, pause, readInput, showListToDelete, confirm }
+module.exports = {
+  showMenu,
+  pause,
+  readInput,
+  showListToDelete,
+  confirm,
+  showCheckList
+}

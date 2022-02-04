@@ -5,7 +5,8 @@ const {
   pause,
   readInput,
   showListToDelete,
-  confirm
+  confirm,
+  showCheckList
 } = require('./helper/inquirer')
 const { saveDB, readDB } = require('./helper/db-handler')
 const Task = require('./models/task')
@@ -40,6 +41,8 @@ const main = async () => {
         tasks.formatList(false)
         break
       case 5:
+        const tasksIds = await showCheckList(tasks.listArr)
+        tasks.updateTasksStatus(tasksIds)
         saveDB(tasks.listArr)
         break
       case 6:

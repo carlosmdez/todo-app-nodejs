@@ -52,6 +52,21 @@ class Tasks {
     })
     console.log(str)
   }
+
+  updateTasksStatus = (ids = []) => {
+    ids.forEach(id => {
+      const task = this.list[id]
+      if (!task.doneDate) {
+        task.doneDate = new Date().toISOString()
+      }
+    })
+
+    this.listArr.forEach(task => {
+      if (!ids.includes(task.id)) {
+        this.list[task.id].doneDate = null
+      }
+    })
+  }
 }
 
 module.exports = Tasks
