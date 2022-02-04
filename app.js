@@ -1,6 +1,6 @@
 require('colors')
 
-const { showMenu, pause, readInput } = require('./helper/inquirer')
+const { showMenu, pause, readInput, showListToDelete } = require('./helper/inquirer')
 const {saveDB, readDB} = require('./helper/db-handler')
 const Task = require('./models/task')
 const Tasks = require('./models/tasks')
@@ -28,14 +28,18 @@ const main = async () => {
         tasks.formatCompleteList()
         break
       case 3:
+        tasks.formatList(true)
         break
       case 4:
+        tasks.formatList(false)
         break
       case 5:
         saveDB(tasks.listArr)
         break
       case 6:
-        saveDB(tasks.listArr)
+        const taskId = await showListToDelete(tasks.listArr)
+        console.log(taskId);
+        // saveDB(tasks.listArr)
         break
       default:
         break

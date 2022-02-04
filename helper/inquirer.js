@@ -24,6 +24,24 @@ const showMenu = async () => {
   return choice
 }
 
+const showListToDelete = async (tasks = []) => {
+  const choices = tasks.map((task, i) => {
+    const index = `${i + 1}`.green
+    const str = `${index}. ${task.description}`
+    return { value: task.id, name: str }
+  })
+  const menuConfig = [
+    {
+      type: 'list',
+      name: 'taskId',
+      message: '¿Qué tarea desea borrar?',
+      choices
+    }
+  ]
+  const { taskId } = await inquirer.prompt(menuConfig)
+  return taskId
+}
+
 const pause = async () => {
   const message = `Presione ${'ENTER'.green} para continuar\n`
   console.log('\n')
@@ -46,4 +64,4 @@ const readInput = async message => {
   return description
 }
 
-module.exports = { showMenu, pause, readInput }
+module.exports = { showMenu, pause, readInput, showListToDelete }
