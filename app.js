@@ -15,8 +15,6 @@ const main = async () => {
     tasks.loadTasksFromArr(tasksSaved)
   }
 
-  // await pause()
-
   do {
     opt = await showMenu()
 
