@@ -9,7 +9,6 @@ const {
   showCheckList
 } = require('./helper/inquirer')
 const { saveDB, readDB } = require('./helper/db-handler')
-const Task = require('./models/task')
 const Tasks = require('./models/tasks')
 
 const main = async () => {
